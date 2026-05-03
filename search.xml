@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2025/11/08/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<img src="D:\Blogs\blogs\source\_posts\hello-world\image-20251108162643715.png" style="zoom:50%;" />
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title></title>
     <url>/2026/05/03/ESP32-S3_%E9%9F%B3%E9%A2%91I2C%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90%E4%BB%AA%E6%B5%8B%E9%87%8F/</url>
     <content><![CDATA[<h2 id="1-输出电平测试"><a href="#1-输出电平测试" class="headerlink" title="1. 输出电平测试"></a>1. 输出电平测试</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">setup</span><span class="params">()</span> &#123;</span><br><span class="line">  Serial.begin(<span class="number">115200</span>);</span><br><span class="line">  pinMode(I2C_SCL, OUTPUT);</span><br><span class="line">  pinMode(I2C_SDA, OUTPUT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> val = <span class="number">1</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">loop</span><span class="params">()</span> &#123;</span><br><span class="line">  digitalWrite(I2C_SCL, val);</span><br><span class="line">  digitalWrite(I2C_SDA, <span class="number">1</span> - val);</span><br><span class="line"></span><br><span class="line">  delay(<span class="number">1000</span>);</span><br><span class="line">  val = <span class="number">1</span> - val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>如下，示波器上均匀输出两个通道相反的波形，测试OK，引脚正常。<br><img src="C:/Users/Fxi/AppData/Roaming/Typora/typora-user-images/image-20260503152131366.png" alt="image-20260503152131366"></p>
+<p>如下，示波器上均匀输出两个通道相反的波形，测试OK，引脚正常。<br><img src="https://cdn.jsdelivr.net/gh/Fx-i/PictureBed@main/img/20260503152825676.png" alt="image-20260503152825629"></p>
 <h2 id="2-I2C链路正常测试"><a href="#2-I2C链路正常测试" class="headerlink" title="2. I2C链路正常测试"></a>2. I2C链路正常测试</h2><h3 id="2-1-原理图上拉电阻确认"><a href="#2-1-原理图上拉电阻确认" class="headerlink" title="2.1 原理图上拉电阻确认"></a>2.1 原理图上拉电阻确认</h3><p>应该要先去看音频模块的原理图，是否加了上拉电阻<br>以我买的ES8311 + NS4150B为例，就没有原理图，<span style="font-size: 18px; color: red">此时要去测SCL&#x2F;SAL的电压值</span></p>
 <p>I2C的原理(开漏)<br><img src="https://cdn.jsdelivr.net/gh/Fx-i/PictureBed@main/img/20260503152151201.png"><br>I2C 协议规范要求 SDA 和 SCL 两条线路上必须有上拉电阻。这是因为 I2C 总线采用开漏（Open-Drain)电路结构，设备只能将信号线拉到低电平，而不能主动输出高电平。上拉电阻的作用就是在总线空闲时，将信号线拉回到高电平，确保通信正常。</p>
 <p>使用万用表去测量电压，毕竟没有上拉电阻，总线上应该不会有正常的高电平<br><img src="https://cdn.jsdelivr.net/gh/Fx-i/PictureBed@main/img/20260503152201758.png" alt="image-20260503152201708"></p>
@@ -53,6 +37,11 @@
   </entry>
   <entry>
     <title></title>
+    <url>/2025/11/08/nwe/</url>
+    <content><![CDATA[<h1 id="nwe"><a href="#nwe" class="headerlink" title="nwe"></a>nwe</h1>]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>/2025/11/08/YUV%E7%8E%B0%E8%B1%A1%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h2 id="Plane数量不匹配导致的图像异常问题"><a href="#Plane数量不匹配导致的图像异常问题" class="headerlink" title="Plane数量不匹配导致的图像异常问题"></a>Plane数量不匹配导致的图像异常问题</h2><h3 id="NV12–-YUYV"><a href="#NV12–-YUYV" class="headerlink" title="NV12–&gt;YUYV"></a>NV12–&gt;YUYV</h3><p><img src="https://cdn.jsdelivr.net/gh/Fx-i/PictureBed@main/img/20260321102811832.png" alt="image-20260321102811722"><br>从双平面的NV12 到 YUYV单平面Packed<br>异常的现象应该要从数据的读取方式解释。YUYV的解析方式必然是逐行，而NV12为双平面。<br>YUYV一个像素为两字节，而NV12的Y为一字节，所以画面上部分为两幅画。下部分由于是UV平面，宽能匹配上，但是高度减半，所以下部分有4分之一的绿色。<br><span style="font-size: 20px; color: orange">注意，画面重复的次数意味着平面字节消耗速度的比例</span></p>
 <h3 id="NV12–-UYUV"><a href="#NV12–-UYUV" class="headerlink" title="NV12–&gt;UYUV"></a>NV12–&gt;UYUV</h3><p>上部分都为Y值，而画面相邻部分的灰度本身就比较接近，因此颜色基本一致</p>
@@ -70,8 +59,19 @@
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2025/11/08/nwe/</url>
-    <content><![CDATA[<h1 id="nwe"><a href="#nwe" class="headerlink" title="nwe"></a>nwe</h1>]]></content>
+    <title>Hello World</title>
+    <url>/2025/11/08/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<img src="D:\Blogs\blogs\source\_posts\hello-world\image-20251108162643715.png" style="zoom:50%;" />
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
 </search>

@@ -208,7 +208,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2026-05-03 15:13:02 / 修改时间：15:23:36" itemprop="dateCreated datePublished" datetime="2026-05-03T15:13:02+08:00">2026-05-03</time>
+              <time title="创建时间：2026-05-03 15:13:02 / 修改时间：15:28:30" itemprop="dateCreated datePublished" datetime="2026-05-03T15:13:02+08:00">2026-05-03</time>
             </span>
 
           
@@ -224,7 +224,7 @@
       
           <h2 id="1-输出电平测试"><a href="#1-输出电平测试" class="headerlink" title="1. 输出电平测试"></a>1. 输出电平测试</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">setup</span><span class="params">()</span> &#123;</span><br><span class="line">  Serial.begin(<span class="number">115200</span>);</span><br><span class="line">  pinMode(I2C_SCL, OUTPUT);</span><br><span class="line">  pinMode(I2C_SDA, OUTPUT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> val = <span class="number">1</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">loop</span><span class="params">()</span> &#123;</span><br><span class="line">  digitalWrite(I2C_SCL, val);</span><br><span class="line">  digitalWrite(I2C_SDA, <span class="number">1</span> - val);</span><br><span class="line"></span><br><span class="line">  delay(<span class="number">1000</span>);</span><br><span class="line">  val = <span class="number">1</span> - val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>如下，示波器上均匀输出两个通道相反的波形，测试OK，引脚正常。<br><img src="C:/Users/Fxi/AppData/Roaming/Typora/typora-user-images/image-20260503152131366.png" alt="image-20260503152131366"></p>
+<p>如下，示波器上均匀输出两个通道相反的波形，测试OK，引脚正常。<br><img src="https://cdn.jsdelivr.net/gh/Fx-i/PictureBed@main/img/20260503152825676.png" alt="image-20260503152825629"></p>
 <h2 id="2-I2C链路正常测试"><a href="#2-I2C链路正常测试" class="headerlink" title="2. I2C链路正常测试"></a>2. I2C链路正常测试</h2><h3 id="2-1-原理图上拉电阻确认"><a href="#2-1-原理图上拉电阻确认" class="headerlink" title="2.1 原理图上拉电阻确认"></a>2.1 原理图上拉电阻确认</h3><p>应该要先去看音频模块的原理图，是否加了上拉电阻<br>以我买的ES8311 + NS4150B为例，就没有原理图，<span style="font-size: 18px; color: red">此时要去测SCL&#x2F;SAL的电压值</span></p>
 <p>I2C的原理(开漏)<br><img src="https://cdn.jsdelivr.net/gh/Fx-i/PictureBed@main/img/20260503152151201.png"><br>I2C 协议规范要求 SDA 和 SCL 两条线路上必须有上拉电阻。这是因为 I2C 总线采用开漏（Open-Drain)电路结构，设备只能将信号线拉到低电平，而不能主动输出高电平。上拉电阻的作用就是在总线空闲时，将信号线拉回到高电平，确保通信正常。</p>
 <p>使用万用表去测量电压，毕竟没有上拉电阻，总线上应该不会有正常的高电平<br><img src="https://cdn.jsdelivr.net/gh/Fx-i/PictureBed@main/img/20260503152201758.png" alt="image-20260503152201708"></p>
